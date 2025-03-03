@@ -1,0 +1,536 @@
+<template>
+  <div class="bg-white">
+    <div>
+      <!-- Mobile filter dialog -->
+      <TransitionRoot as="template" :show="mobileFiltersOpen">
+        <Dialog class="relative z-40 lg:hidden" @close="mobileFiltersOpen = false">
+          <TransitionChild
+            as="template"
+            enter="transition-opacity ease-linear duration-300"
+            enter-from="opacity-0"
+            enter-to="opacity-100"
+            leave="transition-opacity ease-linear duration-300"
+            leave-from="opacity-100"
+            leave-to="opacity-0"
+          >
+            <div class="fixed inset-0 bg-black/25" />
+          </TransitionChild>
+
+          <div class="fixed inset-0 z-40 flex">
+            <TransitionChild
+              as="template"
+              enter="transition ease-in-out duration-300 transform"
+              enter-from="translate-x-full"
+              enter-to="translate-x-0"
+              leave="transition ease-in-out duration-300 transform"
+              leave-from="translate-x-0"
+              leave-to="translate-x-full"
+            >
+              <DialogPanel
+                class="relative ml-auto flex size-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl"
+              >
+                <div class="flex items-center justify-between px-4">
+                  <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+                  <button
+                    type="button"
+                    class="-mr-2 flex size-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+                    @click="mobileFiltersOpen = false"
+                  >
+                    <span class="sr-only">Close menu</span>
+                    <XMarkIcon class="size-6" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <!-- Filters -->
+                <form class="mt-4 border-t border-gray-200">
+                  <h3 class="sr-only">Categories</h3>
+                  <ul role="list" class="px-2 py-3 font-medium text-gray-900">
+                    <li v-for="category in subCategories" :key="category.name">
+                      <a :href="category.href" class="block px-2 py-3">{{ category.name }}</a>
+                    </li>
+                  </ul>
+
+                  <Disclosure
+                    as="div"
+                    v-for="section in filters"
+                    :key="section.id"
+                    class="border-t border-gray-200 px-4 py-6"
+                    v-slot="{ open }"
+                  >
+                    <h3 class="-mx-2 -my-3 flow-root">
+                      <DisclosureButton
+                        class="flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500"
+                      >
+                        <span class="font-medium text-gray-900">{{ section.name }}</span>
+                        <span class="ml-6 flex items-center">
+                          <PlusIcon v-if="!open" class="size-5" aria-hidden="true" />
+                          <MinusIcon v-else class="size-5" aria-hidden="true" />
+                        </span>
+                      </DisclosureButton>
+                    </h3>
+                    <DisclosurePanel class="pt-6">
+                      <div class="space-y-6">
+                        <div
+                          v-for="(option, optionIdx) in section.options"
+                          :key="option.value"
+                          class="flex gap-3"
+                        >
+                          <div class="flex h-5 shrink-0 items-center">
+                            <div class="group grid size-4 grid-cols-1">
+                              <input
+                                :id="`filter-mobile-${section.id}-${optionIdx}`"
+                                :name="`${section.id}[]`"
+                                :value="option.value"
+                                type="checkbox"
+                                class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                              />
+                              <svg
+                                class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
+                                viewBox="0 0 14 14"
+                                fill="none"
+                              >
+                                <path
+                                  class="opacity-0 group-has-checked:opacity-100"
+                                  d="M3 8L6 11L11 3.5"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  class="opacity-0 group-has-indeterminate:opacity-100"
+                                  d="M3 7H11"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                          <label
+                            :for="`filter-mobile-${section.id}-${optionIdx}`"
+                            class="min-w-0 flex-1 text-gray-500"
+                            >{{ option.label }}</label
+                          >
+                        </div>
+                      </div>
+                    </DisclosurePanel>
+                  </Disclosure>
+                </form>
+              </DialogPanel>
+            </TransitionChild>
+          </div>
+        </Dialog>
+      </TransitionRoot>
+
+      <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
+          <h1 class="text-4xl font-bold tracking-tight text-gray-900">Produk Terbaru</h1>
+
+          <div class="flex items-center">
+            <Menu as="div" class="relative inline-block text-left">
+              <div>
+                <MenuButton
+                  class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                >
+                  Sort
+                  <ChevronDownIcon
+                    class="-mr-1 ml-1 size-5 shrink-0 text-gray-400 group-hover:text-gray-500"
+                    aria-hidden="true"
+                  />
+                </MenuButton>
+              </div>
+
+              <transition
+                enter-active-class="transition ease-out duration-100"
+                enter-from-class="transform opacity-0 scale-95"
+                enter-to-class="transform opacity-100 scale-100"
+                leave-active-class="transition ease-in duration-75"
+                leave-from-class="transform opacity-100 scale-100"
+                leave-to-class="transform opacity-0 scale-95"
+              >
+                <MenuItems
+                  class="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white ring-1 shadow-2xl ring-black/5 focus:outline-hidden"
+                >
+                  <div class="py-1">
+                    <MenuItem v-for="option in sortOptions" :key="option.name" v-slot="{ active }">
+                      <a
+                        :href="option.href"
+                        :class="[
+                          option.current ? 'font-medium text-gray-900' : 'text-gray-500',
+                          active ? 'bg-gray-100 outline-hidden' : '',
+                          'block px-4 py-2 text-sm',
+                        ]"
+                        >{{ option.name }}</a
+                      >
+                    </MenuItem>
+                  </div>
+                </MenuItems>
+              </transition>
+            </Menu>
+
+            <button type="button" class="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7">
+              <span class="sr-only">View grid</span>
+              <Squares2X2Icon class="size-5" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              class="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
+              @click="mobileFiltersOpen = true"
+            >
+              <span class="sr-only">Filters</span>
+              <FunnelIcon class="size-5" aria-hidden="true" />
+            </button>
+          </div>
+        </div>
+
+        <section aria-labelledby="products-heading" class="pt-6 pb-24">
+          <h2 id="products-heading" class="sr-only">Products</h2>
+
+          <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
+            <!-- Filters -->
+            <form class="hidden lg:block">
+              <h3 class="sr-only">Categories</h3>
+              <RouterLink>
+                <p class="mb-4 text-sm font-medium text-gray-900">Semua</p>
+              </RouterLink>
+              <ul
+                role="list"
+                class="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
+              >
+                <li v-for="category in subCategories" :key="category.name">
+                  <a :href="category.href">{{ category.name }}</a>
+                </li>
+              </ul>
+
+              <Disclosure
+                as="div"
+                v-for="section in filters"
+                :key="section.id"
+                class="border-b border-gray-200 py-6"
+                v-slot="{ open }"
+              >
+                <h3 class="-my-3 flow-root">
+                  <DisclosureButton
+                    class="flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500"
+                  >
+                    <span class="font-medium text-gray-900">{{ section.name }}</span>
+                    <span class="ml-6 flex items-center">
+                      <PlusIcon v-if="!open" class="size-5" aria-hidden="true" />
+                      <MinusIcon v-else class="size-5" aria-hidden="true" />
+                    </span>
+                  </DisclosureButton>
+                </h3>
+                <DisclosurePanel class="pt-6">
+                  <div class="space-y-4">
+                    <div
+                      v-for="(option, optionIdx) in section.options"
+                      :key="option.value"
+                      class="flex gap-3"
+                    >
+                      <div class="flex h-5 shrink-0 items-center">
+                        <div class="group grid size-4 grid-cols-1">
+                          <input
+                            :id="`filter-${section.id}-${optionIdx}`"
+                            :name="`${section.id}[]`"
+                            :value="option.value"
+                            type="checkbox"
+                            :checked="option.checked"
+                            class="col-start-1 row-start-1 appearance-none rounded-sm border border-gray-300 bg-white checked:border-indigo-600 checked:bg-indigo-600 indeterminate:border-indigo-600 indeterminate:bg-indigo-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:border-gray-300 disabled:bg-gray-100 disabled:checked:bg-gray-100 forced-colors:appearance-auto"
+                          />
+                          <svg
+                            class="pointer-events-none col-start-1 row-start-1 size-3.5 self-center justify-self-center stroke-white group-has-disabled:stroke-gray-950/25"
+                            viewBox="0 0 14 14"
+                            fill="none"
+                          >
+                            <path
+                              class="opacity-0 group-has-checked:opacity-100"
+                              d="M3 8L6 11L11 3.5"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                            <path
+                              class="opacity-0 group-has-indeterminate:opacity-100"
+                              d="M3 7H11"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <label
+                        :for="`filter-${section.id}-${optionIdx}`"
+                        class="text-sm text-gray-600"
+                        >{{ option.label }}</label
+                      >
+                    </div>
+                  </div>
+                </DisclosurePanel>
+              </Disclosure>
+            </form>
+
+            <!-- Product grid -->
+            <div class="lg:col-span-3">
+              <div class="bg-white">
+                <div class="mx-auto max-w-2xl px-4 sm:px-6 lg:max-w-7xl lg:px-8">
+                  <div
+                    class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8"
+                  >
+                    <RouterLink
+                      :to="`/product/${product.id}`"
+                      v-for="product in filteredProducts"
+                      :key="product.id"
+                      class="group relative"
+                    >
+                      <img
+                        :src="product.imageSrc"
+                        :alt="product.imageAlt"
+                        class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
+                      />
+                      <span
+                        class="capitalize mt-2 inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-gray-500/10 ring-inset"
+                        >{{ product.for }}</span
+                      >
+                      <div class="mt-2 flex justify-between">
+                        <div>
+                          <h3 class="text-sm text-gray-700">
+                            <a :href="product.href">
+                              <span aria-hidden="true" class="absolute inset-0" />
+                              {{ product.name }}
+                            </a>
+                          </h3>
+                          <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
+                        </div>
+                        <p class="text-sm font-medium text-gray-900">{{ product.price }}</p>
+                      </div>
+                    </RouterLink>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+</template>
+
+<script setup>
+import { ref, computed } from "vue";
+import { useRoute } from "vue-router";
+import {
+  Dialog,
+  DialogPanel,
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  TransitionChild,
+  TransitionRoot,
+} from "@headlessui/vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+import {
+  ChevronDownIcon,
+  FunnelIcon,
+  MinusIcon,
+  PlusIcon,
+  Squares2X2Icon,
+} from "@heroicons/vue/20/solid";
+
+const sortOptions = [
+  { name: "Most Popular", href: "#", current: true },
+  { name: "Best Rating", href: "#", current: false },
+  { name: "Newest", href: "#", current: false },
+  { name: "Price: Low to High", href: "#", current: false },
+  { name: "Price: High to Low", href: "#", current: false },
+];
+const subCategories = [
+  { name: "Sewa", href: "#" },
+  { name: "Dijual", href: "#" },
+  { name: "Tukar Tambah", href: "#" },
+];
+const filters = [
+  {
+    id: "color",
+    name: "Warna",
+    options: [
+      { value: "Putih", label: "Putih", checked: false },
+      { value: "Emas", label: "Emas", checked: false },
+      { value: "Biru Muda", label: "Biru Muda", checked: false },
+      { value: "Coklat", label: "Coklat", checked: false },
+      { value: "Hijau", label: "Hijau", checked: false },
+      { value: "Ungu", label: "Ungu", checked: false },
+    ],
+  },
+  {
+    id: "category",
+    name: "Kategori",
+    options: [
+      { value: "Baju", label: "Baju", checked: false },
+      { value: "Celana", label: "Celana", checked: false },
+      { value: "Dress", label: "Dress", checked: false },
+      { value: "Rok", label: "Rok", checked: false },
+      { value: "Kebaya", label: "Kebaya", checked: false },
+    ],
+  },
+  {
+    id: "size",
+    name: "Ukuran",
+    options: [
+      { value: "S", label: "S", checked: false },
+      { value: "M", label: "M", checked: false },
+      { value: "L", label: "L", checked: false },
+      { value: "XL", label: "XL", checked: false },
+      { value: "XXL", label: "XXL", checked: false },
+      { value: "3XL", label: "3XL", checked: false },
+    ],
+  },
+];
+import chocochipsZamora from "../assets/ProductsImage/ChocochipsZamora.jpg";
+import BonitoMandarin from "../assets/ProductsImage/Love BonitoMandarin Lace dressRent 250 - 3 daysExtra days 50k-daySize SBust 84 cmWaist 70 cmHip 95 cmLength 122 cm Love Bonito..Book yours nowWhatsapp us 0856 92603318.jpg";
+import Nashilla from "../assets/ProductsImage/Sarah Dewanto - Nashilla full payet in soft purple Rent 500k - 3daysBust- 100cm.jpg";
+import NudeRent from "../assets/ProductsImage/Sapto top in NudeRent top- 300k - 3daysBust allsize.jpg";
+import Odette from "../assets/ProductsImage/MYVB Atelier - Odette puff sleeve top in CamelRent top- 350k - 3daysBust-LD- 100cmLingkar lengan- 42cm.jpg";
+import LabelSafira from "../assets/ProductsImage/Aura LabelSafira dress in Baby BlueRent 120k - 3 daysExtra days 50k-day(inner tank dress)Size XS-SLingkar Dada 94 cmLingkar pinggang max 86 cmLingkar pinggul max 98 cmPanjang b.jpg";
+import Lace from "../assets/ProductsImage/Lace.jpg";
+import GoldRent from "../assets/ProductsImage/GoldRent.jpg";
+import Seliyane from "../assets/ProductsImage/Seliyane.jpg";
+import Artkea from "../assets/ProductsImage/Artkea.jpg";
+import atelierRent from "../assets/ProductsImage/atelierRent.jpg";
+import Selene from "../assets/ProductsImage/Selene embroidered.jpg";
+
+const products = ref([
+  {
+    id: 1,
+    name: "Chocochips Zamora Set",
+    href: "#",
+    imageSrc: chocochipsZamora,
+    imageAlt: "Chocochips Zamora Set",
+    price: "Rp50.000",
+    color: "Merah muda",
+    for: "dijual",
+  },
+  {
+    id: 2,
+    name: "Love Bonito Mandarin Lace dress",
+    href: "#",
+    imageSrc: BonitoMandarin,
+    imageAlt: "Love Bonito Mandarin Lace dress",
+    price: "Rp50.000",
+    color: "Putih",
+    for: "Sewa",
+  },
+  {
+    id: 3,
+    name: "Nashilla full payet in soft purple",
+    href: "#",
+    imageSrc: Nashilla,
+    imageAlt: "Nashilla full payet in soft purple",
+    price: "Rp167.000",
+    color: "Ungu",
+    for: "Sewa",
+  },
+  {
+    id: 4,
+    name: "Sapto top in Nude",
+    href: "#",
+    imageSrc: NudeRent,
+    imageAlt: "Sapto top in Nude",
+    price: "Rp100.000",
+    color: "Merah muda",
+    for: "Sewa",
+  },
+  {
+    id: 5,
+    name: "Odette puff sleeve top in Camel",
+    href: "#",
+    imageSrc: Odette,
+    imageAlt: "Odette puff sleeve top in Camel",
+    price: "Rp117.000",
+    color: "Coklat",
+    for: "Sewa",
+  },
+  {
+    id: 6,
+    name: "Aura Label Safira dress in Baby Blue",
+    href: "#",
+    imageSrc: LabelSafira,
+    imageAlt: "Aura Label Safira dress in Baby Blue",
+    price: "Rp40.000",
+    color: "Biru muda",
+    for: "Sewa",
+  },
+  {
+    id: 7,
+    name: "Selene embroidered midi dress",
+    href: "#",
+    imageSrc: Selene,
+    imageAlt: "Selene embroidered midi dress",
+    price: "Rp134.000",
+    color: "Putih",
+    for: "Sewa",
+  },
+  {
+    id: 8,
+    name: "Lace by Artkea dress",
+    href: "#",
+    imageSrc: Lace,
+    imageAlt: "Lace by Artkea dress",
+    price: "$Rp267.000",
+    color: "Putih",
+    for: "Sewa",
+  },
+  {
+    id: 9,
+    name: "Sarah Dewanto top kebaya in Gold",
+    href: "#",
+    imageSrc: GoldRent,
+    imageAlt: "Sarah Dewanto top kebaya in Gold",
+    price: "Rp67.000",
+    color: "Emas",
+    for: "Sewa",
+  },
+  {
+    id: 10,
+    name: "Seliyane tunic in nude cream",
+    href: "#",
+    imageSrc: Seliyane,
+    imageAlt: "Seliyane tunic in nude cream",
+    price: "Rp67.000",
+    color: "Putih",
+    for: "Sewa",
+  },
+  {
+    id: 11,
+    name: "Lace by Artkea dress in white",
+    href: "#",
+    imageSrc: Artkea,
+    imageAlt: "Lace by Artkea dress in white",
+    price: "Rp234.000",
+    color: "Putih",
+    for: "Sewa",
+  },
+  {
+    id: 12,
+    name: "Kina atelier",
+    href: "#",
+    imageSrc: atelierRent,
+    imageAlt: "Kina atelier",
+    price: "Rp84.000",
+    color: "Merah muda",
+    for: "Sewa",
+  },
+]);
+const mobileFiltersOpen = ref(false);
+const route = useRoute();
+const filterFor = route.query.for || "";
+
+// Filter produk sesuai dengan parameter
+const filteredProducts = computed(() => {
+  return products.value.filter((product) => !filterFor || product.for === filterFor);
+});
+</script>
