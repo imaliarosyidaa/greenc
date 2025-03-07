@@ -20,7 +20,7 @@
       <div class="w-full max-w-md">
         <h2 class="text-2xl font-bold mb-6 text-center">Sign up</h2>
 
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="register">
           <div class="mb-4">
             <label class="block text-gray-700 font-medium">Nama Lengkap</label>
             <input v-model="name" type="text" class="w-full p-3 border rounded" required />
@@ -78,16 +78,38 @@
 </template>
 
 <script>
+import api from "../api.js";
+
 export default {
   data() {
     return {
+      name: "",
       email: "",
       password: "",
+      confirm_password: "",
+      errorMessage: "",
     };
   },
   methods: {
-    handleSubmit() {
-      console.log("Email:", this.email, "Password:", this.password);
+    async register() {
+      try {
+        // Validasi Password & Confirm Password
+        if (this.password !== this.confirm_password) {
+          this.errorMessage = "Password dan Konfirmasi Password tidak cocok!";
+          return;
+        }
+
+        this.errorMessage = "";
+
+        await api.post("/register", {
+          name: this.name,
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.push("/signin");
+      } catch (err) {
+        this.error = "Login gagal, periksa email dan password!";
+      }
     },
   },
 };

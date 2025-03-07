@@ -284,8 +284,8 @@
                       class="group relative"
                     >
                       <img
-                        :src="product.imageSrc"
-                        :alt="product.imageAlt"
+                        :src="product.image_src"
+                        :alt="product.image_alt"
                         class="aspect-square w-full rounded-md bg-gray-200 object-cover group-hover:opacity-75 lg:aspect-auto lg:h-80"
                       />
                       <span
@@ -317,7 +317,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, watch, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import {
   Dialog,
@@ -348,11 +348,13 @@ const sortOptions = [
   { name: "Price: Low to High", href: "#", current: false },
   { name: "Price: High to Low", href: "#", current: false },
 ];
+
 const subCategories = [
-  { name: "Sewa", href: "#" },
+  { name: "sewa", href: "#" },
   { name: "Dijual", href: "#" },
   { name: "Tukar Tambah", href: "#" },
 ];
+
 const filters = [
   {
     id: "color",
@@ -390,147 +392,47 @@ const filters = [
     ],
   },
 ];
-import chocochipsZamora from "../assets/ProductsImage/ChocochipsZamora.jpg";
-import BonitoMandarin from "../assets/ProductsImage/Love BonitoMandarin Lace dressRent 250 - 3 daysExtra days 50k-daySize SBust 84 cmWaist 70 cmHip 95 cmLength 122 cm Love Bonito..Book yours nowWhatsapp us 0856 92603318.jpg";
-import Nashilla from "../assets/ProductsImage/Sarah Dewanto - Nashilla full payet in soft purple Rent 500k - 3daysBust- 100cm.jpg";
-import NudeRent from "../assets/ProductsImage/Sapto top in NudeRent top- 300k - 3daysBust allsize.jpg";
-import Odette from "../assets/ProductsImage/MYVB Atelier - Odette puff sleeve top in CamelRent top- 350k - 3daysBust-LD- 100cmLingkar lengan- 42cm.jpg";
-import LabelSafira from "../assets/ProductsImage/Aura LabelSafira dress in Baby BlueRent 120k - 3 daysExtra days 50k-day(inner tank dress)Size XS-SLingkar Dada 94 cmLingkar pinggang max 86 cmLingkar pinggul max 98 cmPanjang b.jpg";
-import Lace from "../assets/ProductsImage/Lace.jpg";
-import GoldRent from "../assets/ProductsImage/GoldRent.jpg";
-import Seliyane from "../assets/ProductsImage/Seliyane.jpg";
-import Artkea from "../assets/ProductsImage/Artkea.jpg";
-import atelierRent from "../assets/ProductsImage/atelierRent.jpg";
-import Selene from "../assets/ProductsImage/Selene embroidered.jpg";
 
-const products = ref([
-  {
-    id: 1,
-    name: "Chocochips Zamora Set",
-    href: "#",
-    imageSrc: chocochipsZamora,
-    imageAlt: "Chocochips Zamora Set",
-    price: "Rp50.000",
-    color: "Merah muda",
-    for: "dijual",
-  },
-  {
-    id: 2,
-    name: "Love Bonito Mandarin Lace dress",
-    href: "#",
-    imageSrc: BonitoMandarin,
-    imageAlt: "Love Bonito Mandarin Lace dress",
-    price: "Rp50.000",
-    color: "Putih",
-    for: "Sewa",
-  },
-  {
-    id: 3,
-    name: "Nashilla full payet in soft purple",
-    href: "#",
-    imageSrc: Nashilla,
-    imageAlt: "Nashilla full payet in soft purple",
-    price: "Rp167.000",
-    color: "Ungu",
-    for: "Sewa",
-  },
-  {
-    id: 4,
-    name: "Sapto top in Nude",
-    href: "#",
-    imageSrc: NudeRent,
-    imageAlt: "Sapto top in Nude",
-    price: "Rp100.000",
-    color: "Merah muda",
-    for: "Sewa",
-  },
-  {
-    id: 5,
-    name: "Odette puff sleeve top in Camel",
-    href: "#",
-    imageSrc: Odette,
-    imageAlt: "Odette puff sleeve top in Camel",
-    price: "Rp117.000",
-    color: "Coklat",
-    for: "Sewa",
-  },
-  {
-    id: 6,
-    name: "Aura Label Safira dress in Baby Blue",
-    href: "#",
-    imageSrc: LabelSafira,
-    imageAlt: "Aura Label Safira dress in Baby Blue",
-    price: "Rp40.000",
-    color: "Biru muda",
-    for: "Sewa",
-  },
-  {
-    id: 7,
-    name: "Selene embroidered midi dress",
-    href: "#",
-    imageSrc: Selene,
-    imageAlt: "Selene embroidered midi dress",
-    price: "Rp134.000",
-    color: "Putih",
-    for: "Sewa",
-  },
-  {
-    id: 8,
-    name: "Lace by Artkea dress",
-    href: "#",
-    imageSrc: Lace,
-    imageAlt: "Lace by Artkea dress",
-    price: "$Rp267.000",
-    color: "Putih",
-    for: "Sewa",
-  },
-  {
-    id: 9,
-    name: "Sarah Dewanto top kebaya in Gold",
-    href: "#",
-    imageSrc: GoldRent,
-    imageAlt: "Sarah Dewanto top kebaya in Gold",
-    price: "Rp67.000",
-    color: "Emas",
-    for: "Sewa",
-  },
-  {
-    id: 10,
-    name: "Seliyane tunic in nude cream",
-    href: "#",
-    imageSrc: Seliyane,
-    imageAlt: "Seliyane tunic in nude cream",
-    price: "Rp67.000",
-    color: "Putih",
-    for: "Sewa",
-  },
-  {
-    id: 11,
-    name: "Lace by Artkea dress in white",
-    href: "#",
-    imageSrc: Artkea,
-    imageAlt: "Lace by Artkea dress in white",
-    price: "Rp234.000",
-    color: "Putih",
-    for: "Sewa",
-  },
-  {
-    id: 12,
-    name: "Kina atelier",
-    href: "#",
-    imageSrc: atelierRent,
-    imageAlt: "Kina atelier",
-    price: "Rp84.000",
-    color: "Merah muda",
-    for: "Sewa",
-  },
-]);
 const mobileFiltersOpen = ref(false);
 const route = useRoute();
-const filterFor = route.query.for || "";
+const filterFor = ref(route.params.for || "");
+const products = ref([]);
+const loading = ref(false);
+const errorMessage = ref("");
+
+// Fungsi untuk mengambil data produk dari Laravel API
+import api from "../api.js";
+
+const getProducts = async () => {
+  loading.value = true;
+  errorMessage.value = "";
+
+  try {
+    const response = await api.get("/products");
+
+    // axios langsung mengembalikan data di response.data
+    products.value = response.data;
+    console.log(products)
+  } catch (error) {
+    errorMessage.value = error.response?.data?.message || "Gagal mengambil data produk";
+  } finally {
+    loading.value = false;
+  }
+};
 
 // Filter produk sesuai dengan parameter
 const filteredProducts = computed(() => {
-  return products.value.filter((product) => !filterFor || product.for === filterFor);
+  return products.value.filter((product) => !filterFor.value || product.for === filterFor.value);
 });
+
+// Memanggil API saat komponen dimuat
+onMounted(getProducts);
+
+// Watcher untuk update produk saat route berubah
+watch(
+  () => route.params.for,
+  (newFor) => {
+    filterFor.value = newFor;
+  },
+);
 </script>

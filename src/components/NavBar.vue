@@ -23,7 +23,7 @@
       </RouterLink>
 
       <!-- Button Menu Mobile -->
-      <button class="absolute right-0 pr-8 md:hidden" @click="toggleMenu">
+      <button v-if="isHome === true" class="absolute right-0 pr-8 md:hidden" @click="toggleMenu">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -39,51 +39,80 @@
           <line x1="3" x2="21" y1="18" y2="18" />
         </svg>
       </button>
+      <button v-else class="absolute right-0 pr-8 md:hidden" @click="toggleMenu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          fill="none"
+          stroke="gray"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <line x1="3" x2="21" y1="6" y2="6" />
+          <line x1="3" x2="21" y1="12" y2="12" />
+          <line x1="3" x2="21" y1="18" y2="18" />
+        </svg>
+      </button>
     </div>
 
     <!-- Menu Samping untuk Mobile -->
     <div
       v-if="isMenuOpen"
-      class="fixed top-0 right-0 w-64 h-full bg-[#2185D5] shadow-lg transition-transform transform translate-x-0 md:hidden"
+      class="fixed top-0 right-0 z-100 w-64 h-full bg-[#DAA520] shadow-lg transition-transform transform translate-x-0 md:hidden"
     >
-      <div class="flex justify-end p-4">
-        <button @click="toggleMenu">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            stroke="white"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M18 6 6 18" />
-            <path d="m6 6 12 12" />
-          </svg>
-        </button>
+      <div class="flex justify-between p-4">
+        <div>
+          <RouterLink to="/">
+            <img src="../assets/Greenc-white.png" alt="Logo" width="120" class="block md:hidden" />
+          </RouterLink>
+        </div>
+        <div>
+          <button @click="toggleMenu">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <ul class="flex flex-col p-6 space-y-4">
         <li>
-          <RouterLink to="/article" class="text-md no-underline hover:text-gray-300"
+          <RouterLink
+            to="/article"
+            class="text-md no-underline font-semibold text-white hover:text-gray-300"
             >Artikel</RouterLink
           >
         </li>
         <li>
           <RouterLink
-            :to="{ path: '/products', query: { for: 'dijual' } }"
-            class="text-md no-underline hover:text-gray-300"
+            :to="{ path: `/products/${filterValue}` }"
+            class="text-md no-underline font-semibold text-white hover:text-gray-300"
             >Beli Pakaian Secondhand</RouterLink
           >
         </li>
         <li>
-          <RouterLink :to="{ path: '/products', query: { for: 'tukar' } }" class="text-md no-underline hover:text-gray-300"
+          <RouterLink
+            :to="{ path: '/products', query: { for: 'tukar' } }"
+            class="text-md no-underline font-semibold text-white hover:text-gray-300"
             >Tukar Pakaian</RouterLink
           >
         </li>
         <li>
-          <RouterLink :to="{ path: '/products', query: { for: 'sewa' } }" class="text-md no-underline hover:text-gray-300"
+          <RouterLink
+            :to="{ path: '/products', query: { for: 'sewa' } }"
+            class="text-md no-underline font-semibold text-white hover:text-gray-300"
             >Sewa Pakaian</RouterLink
           >
         </li>
@@ -103,25 +132,29 @@
         </li>
         <li>
           <RouterLink
-            :to="{ path: '/products', query: { for: 'dijual' } }"
+            :to="{ path: `/products/dijual` }"
             class="text-md no-underline hover:text-gray-300"
-            >Beli Pakaian Secondhand</RouterLink
+            >Preloved</RouterLink
           >
         </li>
         <li>
-          <RouterLink :to="{ path: '/products', query: { for: 'tukar' } }" class="text-md no-underline hover:text-gray-300"
+          <RouterLink
+            :to="{ path: `/products/tukar` }"
+            class="text-md no-underline hover:text-gray-300"
             >Tukar Pakaian</RouterLink
           >
         </li>
         <li>
-          <RouterLink :to="{ path: '/products', query: { for: 'sewa' } }" class="text-md no-underline hover:text-gray-300"
+          <RouterLink
+            :to="{ path: `/products/sewa` }"
+            class="text-md no-underline hover:text-gray-300"
             >Sewa Pakaian</RouterLink
           >
         </li>
       </ul>
 
       <!-- Tombol Masuk -->
-      <RouterLink to="/signin">
+      <RouterLink v-if="!user?.name" to="/signin">
         <button
           class="md:flex items-center px-4 py-1 cursor-pointer font-semibold rounded-md border-none hidden"
           :class="{
@@ -132,6 +165,9 @@
         >
           Masuk
         </button>
+      </RouterLink>
+      <RouterLink v-if="user?.name" to="/signin">
+        <p class="text-white font-medium hidden md:flex">{{ user?.name }}</p>
       </RouterLink>
     </nav>
   </header>

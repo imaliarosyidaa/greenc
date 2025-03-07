@@ -16,7 +16,7 @@
               <div
                 class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8"
               >
-                <RouterLink v-for="th in Thumbnail" :key="th.id" :to="`/article/${th.id}`" class="group relative">
+                <RouterLink v-for="th in Thumbnail" :key="th.id" :to="`/article/${th.id}`">
                   <img
                     :src="th.imageSrc"
                     :alt="th.imageAlt"
@@ -45,10 +45,8 @@
 
 <script setup>
 import dress from "../assets/ProductsImage/dress-2583113_1280.jpg";
-import chocochipsZamora from "../assets/ProductsImage/ChocochipsZamora.jpg";
 import fastfashion from "../assets/ProductsImage/fast fashion.jpg";
-import d from "../assets/ProductsImage/ChocochipsZamora.jpg";
-import ds from "../assets/ProductsImage/ChocochipsZamora.jpg";
+import  closeup from "../assets/closeup-bea-ch-shore-washed-up-with-garbage.jpg";
 
 const Thumbnail = [
   {
@@ -66,35 +64,11 @@ const Thumbnail = [
     imageAlt: "fast fashion"},
   {
     id: 3,
-    name: "Chocochips Zamora Set",
+    name: "Indonesia Darurat Sampah Textil, Rata-Rata Orang Membuang Sampah 30kg Per Tahun",
     href: "#",
-    imageSrc: chocochipsZamora,
+    imageSrc: closeup,
     imageAlt:
-      "ChocochipsZamora SetRent 150k - 3 daysExtra day 50k - daySize STopBust 84 cmLength 34 cmSkirtWaist 66 cmHips 94 cmLength 74 cm Chocochips..How to rentWhatsapp us 0856 92603318",
-  },
-  {
-    id: 4,
-    name: "Chocochips Zamora Set",
-    href: "#",
-    imageSrc: chocochipsZamora,
-    imageAlt:
-      "ChocochipsZamora SetRent 150k - 3 daysExtra day 50k - daySize STopBust 84 cmLength 34 cmSkirtWaist 66 cmHips 94 cmLength 74 cm Chocochips..How to rentWhatsapp us 0856 92603318",
-  },
-  {
-    id: 5,
-    name: "Chocochips Zamora Set",
-    href: "#",
-    imageSrc: chocochipsZamora,
-    imageAlt:
-      "ChocochipsZamora SetRent 150k - 3 daysExtra day 50k - daySize STopBust 84 cmLength 34 cmSkirtWaist 66 cmHips 94 cmLength 74 cm Chocochips..How to rentWhatsapp us 0856 92603318",
-  },
-  {
-    id: 6,
-    name: "Chocochips Zamora Set",
-    href: "#",
-    imageSrc: chocochipsZamora,
-    imageAlt:
-      "ChocochipsZamora SetRent 150k - 3 daysExtra day 50k - daySize STopBust 84 cmLength 34 cmSkirtWaist 66 cmHips 94 cmLength 74 cm Chocochips..How to rentWhatsapp us 0856 92603318",
+      "",
   },
 ];
 </script>

@@ -20,10 +20,10 @@ import "../assets/main.css";
       <section class="mx-auto pt-12 px-12 md:pt-24 md:px-24 lg:pt-28 lg:px-28">
         <div class="title-sej">
           <span class="title content"> Pada abad XV (-+ 1430) </span>
-          <img src="../assets/bulat.svg" />
+          <!-- <img src="../assets/bulat.svg" /> -->
         </div>
         <div class="sej-container">
-          <img src="../assets/p-1.png" class="macan-ali" />
+          <!-- <img src="../assets/p-1.png" class="macan-ali" /> -->
           <div class="content border-right">
             Masjid Agung Sang Cipta Rasa kebakaran. Ratu Ayu Pakungwati yang sudah tua itu turut
             memadamkan api. Api dapat dipadamkan, namun Ratu Ayu Pakungwati kemudian wafat. Semenjak
@@ -34,7 +34,7 @@ import "../assets/main.css";
       </section>
       <section class="mx-auto pt-12 px-12 md:pt-24 md:px-24 lg:pt-28 lg:px-28">
         <div>
-          <img src="../assets/bulat.svg" />
+          <!-- <img src="../assets/bulat.svg" /> -->
           <span class="title content"> Pada abad XVI </span>
         </div>
         <div class="sej-container">
@@ -45,16 +45,16 @@ import "../assets/main.css";
             sebelah barat daya Dalem Agung Pakungwati. Dan beliaupun bergelar Panembahan Pakungwati
             I.
           </div>
-          <img src="../assets/k-1.png" class="macan-ali" />
+          <!-- <img src="../assets/k-1.png" class="macan-ali" /> -->
         </div>
       </section>
       <section class="mx-auto pt-12 px-12 md:pt-24 md:px-24 lg:pt-28 lg:px-28">
         <div class="title-sej">
           <span class="title content"> Pada -+ 1549 M </span>
-          <img src="../assets/bulat.svg" />
+          <!-- <img src="../assets/bulat.svg" /> -->
         </div>
         <div class="sej-container">
-          <img src="../assets/m-1.png" class="macan-ali" />
+          <!-- <img src="../assets/m-1.png" class="macan-ali" /> -->
           <div class="content border-right">
             Masjid Agung Sang Cipta Rasa kebakaran. Ratu Ayu Pakungwati yang sudah tua itu turut
             memadamkan api. Api dapat dipadamkan, namun Ratu Ayu Pakungwati kemudian wafat. Semenjak
@@ -65,7 +65,7 @@ import "../assets/main.css";
       </section>
       <section class="mx-auto pt-12 px-12 md:pt-24 md:px-24 lg:pt-28 lg:px-28">
         <div>
-          <img src="../assets/bulat.svg" />
+          <!-- <img src="../assets/bulat.svg" /> -->
           <span class="title content"> Pada -+ 1679 M </span>
         </div>
         <div class="sej-container">
@@ -78,7 +78,7 @@ import "../assets/main.css";
             di Jawa semuanya menghadap ke utara, artinya menghadap magnet dunia, artinya falsafahnya
             sang raja mengharapkan kekuatan.
           </div>
-          <img src="../assets/n-1.png" class="macan-ali" />
+          <!-- <img src="../assets/n-1.png" class="macan-ali" /> -->
         </div>
       </section>
     </div>

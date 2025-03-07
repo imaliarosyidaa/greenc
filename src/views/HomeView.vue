@@ -1,5 +1,5 @@
 <script setup>
-    import '../assets/main.css'
+import "../assets/main.css";
 </script>
 
 <template>
@@ -15,27 +15,39 @@
           Lingkungan Dengan Mengurangi <br />
           Overkonsumsi Pakaian
         </p>
+      </div>
     </div>
-    </div>
-    
-    <About/>
-    <YoutubeSection/>
-    <FeatureSection/>
+
+    <About />
+    <YoutubeSection />
+    <FeatureSection />
     <FaqSection />
     <FooterSection />
   </div>
 </template>
 
 <script>
-import About from './home/About.vue'
-import YoutubeSection from './home/YoutubeVideo.vue'
-import FeatureSection from './home/Feature.vue'
-import FaqSection from './home/Faq.vue'
-import FooterSection from './home/Footer.vue'
+import About from "./home/About.vue";
+import YoutubeSection from "./home/YoutubeVideo.vue";
+import FeatureSection from "./home/Feature.vue";
+import FaqSection from "./home/Faq.vue";
+import FooterSection from "./home/Footer.vue";
+import api from "../api.js";
 
 export default {
-    name : 'HomeLayout',
-}
+  data() {
+    return { user: null };
+  },
+  async mounted() {
+    try {
+      const response = await api.get("/user");
+      this.user = response.data;
+      console.log(this.user)
+    } catch (err) {
+      console.error("Gagal mengambil data user", err);
+    }
+  },
+};
 </script>
 
 <style>
@@ -87,7 +99,7 @@ export default {
 
 .hero .brand {
   width: 139px;
-  color:white;
+  color: white;
 }
 
 .hero .navbar-2 {
@@ -110,7 +122,7 @@ export default {
   text-align: center;
   white-space: nowrap;
   width: fit-content;
-  color:white;
+  color: white;
 }
 
 .hero .text-wrapper-2 {
@@ -125,11 +137,11 @@ export default {
   white-space: nowrap;
   width: fit-content;
   border-radius: 5px;
-  background-color: #DAA520;
+  background-color: #daa520;
   padding: 5px 25px 5px 25px;
 }
 
-.text-wrapper-3{
+.text-wrapper-3 {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -141,7 +153,7 @@ export default {
   position: absolute;
   text-align: center;
   top: 233px;
-  color: var(--yellow_title, #FFF6E0);
+  color: var(--yellow_title, #fff6e0);
   /* Raleway/regular/display */
   font-family: Raleway;
   font-size: 64px;

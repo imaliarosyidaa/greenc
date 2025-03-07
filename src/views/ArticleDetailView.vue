@@ -59,6 +59,8 @@ import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import dress from "../assets/ProductsImage/dress-2583113_1280.jpg";
 import fastfashion from "../assets/ProductsImage/fast fashion.jpg";
+import  closeup from "../assets/closeup-bea-ch-shore-washed-up-with-garbage.jpg";
+
 
 const articles = ref([
   {
@@ -98,9 +100,11 @@ const articles = ref([
     id: 3,
     title: "Fenomena Fast Fashion, Lingkungan Menjadi Rusak",
     date: "2025-03-02",
-    imageSrc: fastfashion,
-    content:
-      "Dalam Tinkerlust Impact Report 2022, terdapat 63,46 persen warga Indonesia yang lebih suka membeli produk fast fashion karena mudah dan fashionable. Berbagai tren fashion silih berganti hadir di tengah masyarakat. Adanya media sosial menyebabkan persebaran mode-mode baru pakaian berlangsung secara cepat. Akibatnya, masyarakat melakukan belanja pakaian secara masif untuk dapat memenuhi hasrat mengikuti tren.",
+    imageSrc: closeup,
+    par1: "PT LG Electronics Indonesia (LG)  memulai kampanye Better Life When We Recycle (Kamis, 27/2). kampanye ini bertujuan mengajak masyarakat mengumpulkan yang tak layak pakai untuk didaur ulang. Kampanye ini menjadi upaya memperluas kesadaran akan keberadaan dan pengelolaan fabric waste di Indonesia.",
+    par2: "Menurut Ha Sang-chul, Presiden LG Electronics di Indonesia, fabric waste yang tak dapat terdekomposisi dengan baik menjadi tantangan bagi keberlangusngan lingkungan, terlebih lagi kita tumbuh berssama gaya hidup modern. Upaya kampanye ini menghadirkan drop box sebagai upaya mengumpulkan pakaian yang tak terpakai dari masyarakat, bertempat di 3 kota besar di Indonesia yakni Jakarta, Surabaya, dan Semarang. total berjumlah 4 buah dengan 2 box berada di Jakarta.",
+    par3: "Rata-rata setiap orang di Indonesia mebuang sampah textil sebanyak 30kg pertahun. Sedangkan hanya 300.000 ton limbah tekstil yang bisa didaur ulang setiap tahunya, menurut Christina Harjanto, Co Founder EcoTouch.",
+    par4: "Ia juga menambahkan, bahwa sampah tekstil adalah sampah yang sulit terurai dan lama prosesnya. Penumpukan sampah di TPA umumnya juga tekstil, terutama tekstil dari kain sintetis. Hal ini menjadi Tantangan bagi lingkungan.",
   },
   {
     id: 4,

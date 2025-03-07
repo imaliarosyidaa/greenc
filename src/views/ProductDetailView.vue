@@ -272,6 +272,14 @@ import chocochipsZamora4 from "../assets/ProductsImage/ChocochipsZamora-4.jpg";
 import chocochipsZamora5 from "../assets/ProductsImage/ChocochipsZamora-5.jpg";
 import chocochipsZamora6 from "../assets/ProductsImage/ChocochipsZamora-6.jpg";
 import chocochipsZamora7 from "../assets/ProductsImage/ChocochipsZamora-7.jpg";
+
+import Bonito2 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-2.jpg";
+import Bonito3 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-3.jpg";
+import Bonito4 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-4.jpg";
+import Bonito5 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-5.jpg";
+import Bonito6 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-6.jpg";
+import Bonito from "../assets/ProductsImage/Love BonitoMandarin Lace dressRent 250 - 3 daysExtra days 50k-daySize SBust 84 cmWaist 70 cmHip 95 cmLength 122 cm Love Bonito..Book yours nowWhatsapp us 0856 92603318.jpg";
+
 import { useRoute } from "vue-router";
 
 const products = ref([
@@ -292,6 +300,44 @@ const products = ref([
       { src: chocochipsZamora5, alt: "Chocochips Zamora Set" },
       { src: chocochipsZamora6, alt: "Chocochips Zamora Set" },
       { src: chocochipsZamora7, alt: "Chocochips Zamora Set" },
+    ],
+    colors: [{ name: "Merah muda", class: "bg-pink-100", selectedClass: "ring-gray-400" }],
+    sizes: [
+      { name: "XXS", inStock: false },
+      { name: "XS", inStock: false },
+      { name: "S", inStock: true },
+      { name: "M", inStock: false },
+      { name: "L", inStock: false },
+      { name: "XL", inStock: false },
+      { name: "2XL", inStock: false },
+      { name: "3XL", inStock: false },
+    ],
+    description:
+      "Chocochips Zamora Set mempunyai desain yang anggun dan elegan cocok digunakan untuk pesta, acara pernikahan, acara formal dan lain-lain. Harga sewa per hari. Hanya tersedia pilihan warna merah muda.",
+    highlights: [
+      "Rent💰150k / 3 days",
+      "Extra day 50k / day",
+      "Pre-washed & pre-shrunk",
+      "Ultra-soft 100% cotton",
+    ],
+    details: "Size S Top = Bust 84 cm Length 34 cm. Skirt = Waist 66 cm Hips 94 cm Length 74 cm",
+  },
+  {
+    id: 2,
+    name: "Love Bonito Mandarin Lace dress",
+    price: "Rp50.000",
+    href: "#",
+    breadcrumbs: [
+      { id: 1, name: "Men", href: "#" },
+      { id: 2, name: "Clothing", href: "#" },
+    ],
+    images: [
+      { src: Bonito, alt: "Chocochips Zamora Set" },
+      { src: Bonito2, alt: "Chocochips Zamora Set" },
+      { src: Bonito3, alt: "Chocochips Zamora Set" },
+      { src: Bonito4, alt: "Chocochips Zamora Set" },
+      { src: Bonito5, alt: "Chocochips Zamora Set" },
+      { src: Bonito6, alt: "Chocochips Zamora Set" },
     ],
     colors: [{ name: "Merah muda", class: "bg-pink-100", selectedClass: "ring-gray-400" }],
     sizes: [

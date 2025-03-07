@@ -20,7 +20,7 @@
       <div class="w-full max-w-md">
         <h2 class="text-2xl font-bold pb-6 text-center">Sign in</h2>
 
-        <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="login">
           <div class="pb-4">
             <label class="block text-gray-700 font-medium">Email</label>
             <input v-model="email" type="email" class="w-full p-3 border rounded" required />
@@ -38,6 +38,8 @@
           </div>
 
           <button type="submit" class="w-full bg-[#DAA520] text-white py-3 rounded">Sign In</button>
+
+          <p v-if="error" class="text-red-500 mt-2">{{ error }}</p>
         </form>
 
         <RouterLink to="/signup">
@@ -56,16 +58,28 @@
 </template>
 
 <script>
+import api from "../api.js";
+
 export default {
   data() {
     return {
       email: "",
       password: "",
+      error: null,
     };
   },
   methods: {
-    handleSubmit() {
-      console.log("Email:", this.email, "Password:", this.password);
+    async login() {
+      try {
+        const response = await api.post("/login", {
+          email: this.email,
+          password: this.password,
+        });
+        localStorage.setItem("token", response.data.token);
+        this.$router.push("/");
+      } catch (err) {
+        this.error = "Login gagal, periksa email dan password!";
+      }
     },
   },
 };
