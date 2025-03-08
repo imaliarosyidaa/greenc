@@ -31,7 +31,7 @@
             <input v-model="email" type="email" class="w-full p-3 border rounded" required />
           </div>
 
-          <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-end ">
             <!-- Password -->
             <div>
               <label class="block text-gray-700 font-medium">Password</label>
@@ -57,7 +57,7 @@
             </div>
           </div>
 
-          <button type="submit" class="w-full bg-[#DAA520] text-white py-3 rounded">
+          <button type="submit" class="w-full cursor-pointer bg-[#DAA520] text-white py-3 rounded">
             Buat Akun
           </button>
         </form>

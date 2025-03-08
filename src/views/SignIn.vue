@@ -37,7 +37,7 @@
             />
           </div>
 
-          <button type="submit" class="w-full bg-[#DAA520] text-white py-3 rounded">Sign In</button>
+          <button type="submit" class="w-full bg-[#DAA520] text-white py-3 rounded cursor-pointer">Sign In</button>
 
           <p v-if="error" class="text-red-500 mt-2">{{ error }}</p>
         </form>

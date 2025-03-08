@@ -6,10 +6,10 @@
           role="list"
           class="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
         >
-          <li v-for="breadcrumb in product.breadcrumbs" :key="breadcrumb.id">
+          <li v-for="breadcrumb in product?.breadcrumbs" :key="breadcrumb?.id">
             <div class="flex items-center">
-              <a :href="breadcrumb.href" class="mr-2 text-sm font-medium text-gray-900">{{
-                breadcrumb.name
+              <a :href="breadcrumb?.href" class="mr-2 text-sm font-medium text-gray-900">{{
+                breadcrumb?.name
               }}</a>
               <svg
                 width="16"
@@ -25,10 +25,10 @@
           </li>
           <li class="text-sm">
             <a
-              :href="product.href"
+              :href="product?.href"
               aria-current="page"
               class="font-medium text-gray-500 hover:text-gray-600"
-              >{{ product.name }}</a
+              >{{ product?.name }}</a
             >
           </li>
         </ol>
@@ -48,7 +48,7 @@
                 :style="`transform: translateX(-${currentIndex * 100}%)`"
               >
                 <div
-                  v-for="(image, index) in product.images"
+                  v-for="(image, index) in product?.images"
                   :key="index"
                   class="min-w-full flex justify-center"
                 >
@@ -79,14 +79,14 @@
           </div>
 
           <h1 class="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">
-            {{ product.name }}
+            {{ product?.name }}
           </h1>
         </div>
 
         <!-- Options -->
         <div class="mt-4 lg:row-span-3 lg:mt-0">
           <h2 class="sr-only">Product information</h2>
-          <p class="text-3xl tracking-tight text-gray-900">{{ product.price }}</p>
+          <p class="text-3xl tracking-tight text-gray-900">{{ product?.price }}</p>
 
           <!-- Reviews -->
           <div class="mt-6">
@@ -121,17 +121,17 @@
                 <RadioGroup v-model="selectedColor" class="flex items-center gap-x-3">
                   <RadioGroupOption
                     as="template"
-                    v-for="color in product.colors"
+                    v-for="color in product?.colors"
                     :key="color.name"
                     :value="color"
                     :aria-label="color.name"
-                    v-slot="{ active, checked }"
+                    v-slot="slotProps = {}"
                   >
                     <div
                       :class="[
                         color.selectedClass,
-                        active && checked ? 'ring-3 ring-offset-1' : '',
-                        !active && checked ? 'ring-2' : '',
+                        slotProps.active && slotProps.checked ? 'ring-3 ring-offset-1' : '',
+                        !slotProps.active && slotProps.checked ? 'ring-2' : '',
                         'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-hidden',
                       ]"
                     >
@@ -161,27 +161,27 @@
                 >
                   <RadioGroupOption
                     as="template"
-                    v-for="size in product.sizes"
+                    v-for="size in product?.sizes"
                     :key="size.name"
                     :value="size"
-                    :disabled="!size.inStock"
-                    v-slot="{ active, checked }"
+                    :disabled="!size.in_stock"
+                    v-slot="slotProps = {}"
                   >
                     <div
                       :class="[
-                        size.inStock
+                        size.in_stock
                           ? 'cursor-pointer bg-white text-gray-900 shadow-xs'
                           : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                        active ? 'ring-2 ring-indigo-500' : '',
+                        slotProps?.active ? 'ring-2 ring-indigo-500' : '',
                         'group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-hidden sm:flex-1 sm:py-6',
                       ]"
                     >
                       <span>{{ size.name }}</span>
                       <span
-                        v-if="size.inStock"
+                        v-if="size.in_stock"
                         :class="[
-                          active ? 'border' : 'border-2',
-                          checked ? 'border-indigo-500' : 'border-transparent',
+                          slotProps?.active ? 'border' : 'border-2',
+                          slotProps?.checked ? 'border-indigo-500' : 'border-transparent',
                           'pointer-events-none absolute -inset-px rounded-md',
                         ]"
                         aria-hidden="true"
@@ -218,7 +218,7 @@
             >
               Add to bag
             </button>
-            <RouterLink :to="`/checkout/${product.id}`">
+            <RouterLink :to="`/checkout/${product?.id}`">
               <button class="mt-4 w-full bg-[#daa520] text-white p-3 rounded-md">Check Out</button>
             </RouterLink>
           </form>
@@ -232,7 +232,7 @@
             <h3 class="sr-only">Description</h3>
 
             <div class="space-y-6">
-              <p class="text-base text-gray-900">{{ product.description }}</p>
+              <p class="text-base text-gray-900">{{ product?.description }}</p>
             </div>
           </div>
 
@@ -241,8 +241,8 @@
 
             <div class="mt-4">
               <ul role="list" class="list-disc space-y-2 pl-4 text-sm">
-                <li v-for="highlight in product.highlights" :key="highlight" class="text-gray-400">
-                  <span class="text-gray-600">{{ highlight }}</span>
+                <li v-for="highlight in product?.highlights" :key="highlight" class="text-gray-400">
+                  <span class="text-gray-600">{{ highlight?.highlight }}</span>
                 </li>
               </ul>
             </div>
@@ -252,7 +252,7 @@
             <h2 class="text-sm font-medium text-gray-900">Details</h2>
 
             <div class="mt-4 space-y-6">
-              <p class="text-sm text-gray-600">{{ product.details }}</p>
+              <p class="text-sm text-gray-600">{{ product?.details }}</p>
             </div>
           </div>
         </div>
@@ -262,114 +262,43 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import { StarIcon } from "@heroicons/vue/20/solid";
-import { RadioGroup, RadioGroupOption } from "@headlessui/vue";
-import chocochipsZamora from "../assets/ProductsImage/ChocochipsZamora.jpg";
-import chocochipsZamora2 from "../assets/ProductsImage/ChocochipsZamora-2.jpg";
-import chocochipsZamora3 from "../assets/ProductsImage/ChocochipsZamora-3.jpg";
-import chocochipsZamora4 from "../assets/ProductsImage/ChocochipsZamora-4.jpg";
-import chocochipsZamora5 from "../assets/ProductsImage/ChocochipsZamora-5.jpg";
-import chocochipsZamora6 from "../assets/ProductsImage/ChocochipsZamora-6.jpg";
-import chocochipsZamora7 from "../assets/ProductsImage/ChocochipsZamora-7.jpg";
-
-import Bonito2 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-2.jpg";
-import Bonito3 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-3.jpg";
-import Bonito4 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-4.jpg";
-import Bonito5 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-5.jpg";
-import Bonito6 from "../assets/ProductsImage/Love Bonito Mandarin Lace dress-6.jpg";
-import Bonito from "../assets/ProductsImage/Love BonitoMandarin Lace dressRent 250 - 3 daysExtra days 50k-daySize SBust 84 cmWaist 70 cmHip 95 cmLength 122 cm Love Bonito..Book yours nowWhatsapp us 0856 92603318.jpg";
-
 import { useRoute } from "vue-router";
 
-const products = ref([
-  {
-    id: 1,
-    name: "Chocochips Zamora Set",
-    price: "Rp50.000",
-    href: "#",
-    breadcrumbs: [
-      { id: 1, name: "Men", href: "#" },
-      { id: 2, name: "Clothing", href: "#" },
-    ],
-    images: [
-      { src: chocochipsZamora, alt: "Chocochips Zamora Set" },
-      { src: chocochipsZamora2, alt: "Chocochips Zamora Set" },
-      { src: chocochipsZamora3, alt: "Chocochips Zamora Set" },
-      { src: chocochipsZamora4, alt: "Chocochips Zamora Set" },
-      { src: chocochipsZamora5, alt: "Chocochips Zamora Set" },
-      { src: chocochipsZamora6, alt: "Chocochips Zamora Set" },
-      { src: chocochipsZamora7, alt: "Chocochips Zamora Set" },
-    ],
-    colors: [{ name: "Merah muda", class: "bg-pink-100", selectedClass: "ring-gray-400" }],
-    sizes: [
-      { name: "XXS", inStock: false },
-      { name: "XS", inStock: false },
-      { name: "S", inStock: true },
-      { name: "M", inStock: false },
-      { name: "L", inStock: false },
-      { name: "XL", inStock: false },
-      { name: "2XL", inStock: false },
-      { name: "3XL", inStock: false },
-    ],
-    description:
-      "Chocochips Zamora Set mempunyai desain yang anggun dan elegan cocok digunakan untuk pesta, acara pernikahan, acara formal dan lain-lain. Harga sewa per hari. Hanya tersedia pilihan warna merah muda.",
-    highlights: [
-      "Rent💰150k / 3 days",
-      "Extra day 50k / day",
-      "Pre-washed & pre-shrunk",
-      "Ultra-soft 100% cotton",
-    ],
-    details: "Size S Top = Bust 84 cm Length 34 cm. Skirt = Waist 66 cm Hips 94 cm Length 74 cm",
-  },
-  {
-    id: 2,
-    name: "Love Bonito Mandarin Lace dress",
-    price: "Rp50.000",
-    href: "#",
-    breadcrumbs: [
-      { id: 1, name: "Men", href: "#" },
-      { id: 2, name: "Clothing", href: "#" },
-    ],
-    images: [
-      { src: Bonito, alt: "Chocochips Zamora Set" },
-      { src: Bonito2, alt: "Chocochips Zamora Set" },
-      { src: Bonito3, alt: "Chocochips Zamora Set" },
-      { src: Bonito4, alt: "Chocochips Zamora Set" },
-      { src: Bonito5, alt: "Chocochips Zamora Set" },
-      { src: Bonito6, alt: "Chocochips Zamora Set" },
-    ],
-    colors: [{ name: "Merah muda", class: "bg-pink-100", selectedClass: "ring-gray-400" }],
-    sizes: [
-      { name: "XXS", inStock: false },
-      { name: "XS", inStock: false },
-      { name: "S", inStock: true },
-      { name: "M", inStock: false },
-      { name: "L", inStock: false },
-      { name: "XL", inStock: false },
-      { name: "2XL", inStock: false },
-      { name: "3XL", inStock: false },
-    ],
-    description:
-      "Chocochips Zamora Set mempunyai desain yang anggun dan elegan cocok digunakan untuk pesta, acara pernikahan, acara formal dan lain-lain. Harga sewa per hari. Hanya tersedia pilihan warna merah muda.",
-    highlights: [
-      "Rent💰150k / 3 days",
-      "Extra day 50k / day",
-      "Pre-washed & pre-shrunk",
-      "Ultra-soft 100% cotton",
-    ],
-    details: "Size S Top = Bust 84 cm Length 34 cm. Skirt = Waist 66 cm Hips 94 cm Length 74 cm",
-  },
-]);
-const reviews = { href: "#", average: 4, totalCount: 117 };
+const product = ref();
+const loading = ref(false);
+const errorMessage = ref("");
+
+// Fungsi untuk mengambil data produk dari Laravel API
+import api from "../api.js";
+
+const getProducts = async () => {
+  loading.value = true;
+  errorMessage.value = "";
+
+  try {
+    const response = await api.get(`/products/${route.params.id}`);
+
+    // axios langsung mengembalikan data di response.data
+    product.value = response.data;
+    console.log(product);
+  } catch (error) {
+    errorMessage.value = error.response?.data?.message || "Gagal mengambil data produk";
+  } finally {
+    loading.value = false;
+  }
+};
+
+// Memanggil API saat komponen dimuat
+onMounted(getProducts);
+
+const reviews = { href: "#", average: 4, totalCount: 4 };
 const route = useRoute();
-const product = computed(
-  () => products.value.find((a) => a.id === Number(route.params.id)) || null,
-);
 
 // Pastikan tidak mengakses properti jika product null
 const selectedColor = ref(product.value?.colors?.[0] || null);
-const selectedSize = ref(product.value?.sizes?.find((s) => s.inStock) || null);
+const selectedSize = ref(product.value?.sizes?.find((s) => s.in_stock) || null);
 
 const currentIndex = ref(0);
 
