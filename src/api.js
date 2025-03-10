@@ -4,7 +4,7 @@ const api = axios.create({
     baseURL: 'https://greencapi.site/api/',
     headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
     }
 });
 api.interceptors.request.use(config => {

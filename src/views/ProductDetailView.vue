@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white -z-10 absolute">
     <div class="pt-6">
       <nav aria-label="Breadcrumb">
         <ol
@@ -88,140 +88,34 @@
           <h2 class="sr-only">Product information</h2>
           <p class="text-3xl tracking-tight text-gray-900">{{ product?.price }}</p>
 
-          <!-- Reviews -->
-          <div class="mt-6">
-            <h3 class="sr-only">Reviews</h3>
-            <div class="flex items-center">
-              <div class="flex items-center">
-                <StarIcon
-                  v-for="rating in [0, 1, 2, 3, 4]"
-                  :key="rating"
-                  :class="[
-                    reviews.average > rating ? 'text-gray-900' : 'text-gray-200',
-                    'size-5 shrink-0',
-                  ]"
-                  aria-hidden="true"
-                />
-              </div>
-              <p class="sr-only">{{ reviews.average }} out of 5 stars</p>
-              <a
-                :href="reviews.href"
-                class="ml-3 text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                >{{ reviews.totalCount }} reviews</a
+          <div class="mt-4">
+            <h3 class="text-sm font-medium text-gray-900">Jumlah Hari Sewa/Beli</h3>
+            <div class="flex items-center mt-4 space-x-4">
+              <button
+                @click.prevent="decrease"
+                class="bg-white border hover:bg-gray-50 px-3 py-2 rounded"
               >
+                -
+              </button>
+              <span>{{ count }}</span>
+              <button
+                @click.prevent="increase"
+                class="bg-white border hover:bg-gray-50 px-3 py-2 rounded"
+              >
+                +
+              </button>
             </div>
           </div>
 
-          <form class="mt-10">
-            <!-- Colors -->
-            <div>
-              <h3 class="text-sm font-medium text-gray-900">Color</h3>
-
-              <fieldset aria-label="Choose a color" class="mt-4">
-                <RadioGroup v-model="selectedColor" class="flex items-center gap-x-3">
-                  <RadioGroupOption
-                    as="template"
-                    v-for="color in product?.colors"
-                    :key="color.name"
-                    :value="color"
-                    :aria-label="color.name"
-                    v-slot="slotProps = {}"
-                  >
-                    <div
-                      :class="[
-                        color.selectedClass,
-                        slotProps.active && slotProps.checked ? 'ring-3 ring-offset-1' : '',
-                        !slotProps.active && slotProps.checked ? 'ring-2' : '',
-                        'relative -m-0.5 flex cursor-pointer items-center justify-center rounded-full p-0.5 focus:outline-hidden',
-                      ]"
-                    >
-                      <span
-                        aria-hidden="true"
-                        :class="[color.class, 'size-8 rounded-full border border-black/10']"
-                      />
-                    </div>
-                  </RadioGroupOption>
-                </RadioGroup>
-              </fieldset>
-            </div>
-
-            <!-- Sizes -->
-            <div class="mt-10">
-              <div class="flex items-center justify-between">
-                <h3 class="text-sm font-medium text-gray-900">Size</h3>
-                <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
-                  >Size guide</a
-                >
-              </div>
-
-              <fieldset aria-label="Choose a size" class="mt-4">
-                <RadioGroup
-                  v-model="selectedSize"
-                  class="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
-                >
-                  <RadioGroupOption
-                    as="template"
-                    v-for="size in product?.sizes"
-                    :key="size.name"
-                    :value="size"
-                    :disabled="!size.in_stock"
-                    v-slot="slotProps = {}"
-                  >
-                    <div
-                      :class="[
-                        size.in_stock
-                          ? 'cursor-pointer bg-white text-gray-900 shadow-xs'
-                          : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                        slotProps?.active ? 'ring-2 ring-indigo-500' : '',
-                        'group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-hidden sm:flex-1 sm:py-6',
-                      ]"
-                    >
-                      <span>{{ size.name }}</span>
-                      <span
-                        v-if="size.in_stock"
-                        :class="[
-                          slotProps?.active ? 'border' : 'border-2',
-                          slotProps?.checked ? 'border-indigo-500' : 'border-transparent',
-                          'pointer-events-none absolute -inset-px rounded-md',
-                        ]"
-                        aria-hidden="true"
-                      />
-                      <span
-                        v-else
-                        aria-hidden="true"
-                        class="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                      >
-                        <svg
-                          class="absolute inset-0 size-full stroke-2 text-gray-200"
-                          viewBox="0 0 100 100"
-                          preserveAspectRatio="none"
-                          stroke="currentColor"
-                        >
-                          <line
-                            x1="0"
-                            y1="100"
-                            x2="100"
-                            y2="0"
-                            vector-effect="non-scaling-stroke"
-                          />
-                        </svg>
-                      </span>
-                    </div>
-                  </RadioGroupOption>
-                </RadioGroup>
-              </fieldset>
-            </div>
-
-            <button
-              type="submit"
-              class="mt-10 flex w-full items-center justify-center rounded-md bg-white border-1 border-[#daa520] px-8 py-3 text-base font-medium text-[#daa520] focus:ring-2 focus:ring-[#daa520] focus:ring-offset-2 focus:outline-hidden"
-            >
-              Add to bag
-            </button>
-            <RouterLink :to="`/checkout/${product?.id}`">
-              <button class="mt-4 w-full bg-[#daa520] text-white p-3 rounded-md">Check Out</button>
-            </RouterLink>
-          </form>
+          <!-- <button
+            type="submit"
+            class="mt-10 flex w-full items-center justify-center rounded-md bg-white border-1 border-[#daa520] px-8 py-3 text-base font-medium text-[#daa520] focus:ring-2 focus:ring-[#daa520] focus:ring-offset-2 focus:outline-hidden"
+          >
+            Add to cart
+          </button> -->
+          <RouterLink :to="`/checkout/${product?.id}?q=${count}`">
+            <button class="mt-4 w-full bg-[#daa520] text-white p-3 rounded-md cursor-pointer">Check Out</button>
+          </RouterLink>
         </div>
 
         <div
@@ -258,19 +152,187 @@
         </div>
       </div>
     </div>
+
+    <TransitionRoot as="template" :show="open">
+      <Dialog class="relative z-10" @close="open = false">
+        <TransitionChild
+          as="template"
+          enter="ease-in-out duration-500"
+          enter-from="opacity-0"
+          enter-to="opacity-100"
+          leave="ease-in-out duration-500"
+          leave-from="opacity-100"
+          leave-to="opacity-0"
+        >
+          <div class="fixed inset-0 bg-gray-500/75 transition-opacity" />
+        </TransitionChild>
+
+        <div class="fixed inset-0 overflow-hidden">
+          <div class="absolute inset-0 overflow-hidden">
+            <div class="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
+              <TransitionChild
+                as="template"
+                enter="transform transition ease-in-out duration-500 sm:duration-700"
+                enter-from="translate-x-full"
+                enter-to="translate-x-0"
+                leave="transform transition ease-in-out duration-500 sm:duration-700"
+                leave-from="translate-x-0"
+                leave-to="translate-x-full"
+              >
+                <DialogPanel class="pointer-events-auto w-screen max-w-md">
+                  <div class="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
+                    <div class="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                      <div class="flex items-start justify-between">
+                        <DialogTitle class="text-lg font-medium text-gray-900"
+                          >Shopping cart</DialogTitle
+                        >
+                        <div class="ml-3 flex h-7 items-center">
+                          <button
+                            type="button"
+                            class="relative -m-2 p-2 text-gray-400 hover:text-gray-500"
+                            @click="open = false"
+                          >
+                            <span class="absolute -inset-0.5" />
+                            <span class="sr-only">Close panel</span>
+                            <XMarkIcon class="size-6" aria-hidden="true" />
+                          </button>
+                        </div>
+                      </div>
+
+                      <div class="mt-8">
+                        <div class="flow-root">
+                          <ul role="list" class="-my-6 divide-y divide-gray-200">
+                            <li v-for="product in products" :key="product.id" class="flex py-6">
+                              <div
+                                class="size-24 shrink-0 overflow-hidden rounded-md border border-gray-200"
+                              >
+                                <img
+                                  :src="product.imageSrc"
+                                  :alt="product.imageAlt"
+                                  class="size-full object-cover"
+                                />
+                              </div>
+
+                              <div class="ml-4 flex flex-1 flex-col">
+                                <div>
+                                  <div
+                                    class="flex justify-between text-base font-medium text-gray-900"
+                                  >
+                                    <h3>
+                                      <a :href="product.href">{{ product.name }}</a>
+                                    </h3>
+                                    <p class="ml-4">{{ product.price }}</p>
+                                  </div>
+                                  <p class="mt-1 text-sm text-gray-500">{{ product.color }}</p>
+                                </div>
+                                <div class="flex flex-1 items-end justify-between text-sm">
+                                  <p class="text-gray-500">Qty {{ product.quantity }}</p>
+
+                                  <div class="flex">
+                                    <button
+                                      type="button"
+                                      class="font-medium text-indigo-600 hover:text-indigo-500"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 px-4 py-6 sm:px-6">
+                      <div class="flex justify-between text-base font-medium text-gray-900">
+                        <p>Subtotal</p>
+                        <p>$262.00</p>
+                      </div>
+                      <p class="mt-0.5 text-sm text-gray-500">
+                        Shipping and taxes calculated at checkout.
+                      </p>
+                      <div class="mt-6">
+                        <a
+                          href="#"
+                          class="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-xs hover:bg-indigo-700"
+                          >Checkout</a
+                        >
+                      </div>
+                      <div class="mt-6 flex justify-center text-center text-sm text-gray-500">
+                        <p>
+                          or{{ " " }}
+                          <button
+                            type="button"
+                            class="font-medium text-indigo-600 hover:text-indigo-500"
+                            @click="open = false"
+                          >
+                            Continue Shopping
+                            <span aria-hidden="true"> &rarr;</span>
+                          </button>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </DialogPanel>
+              </TransitionChild>
+            </div>
+          </div>
+        </div>
+      </Dialog>
+    </TransitionRoot>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue";
-import { StarIcon } from "@heroicons/vue/20/solid";
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from "@headlessui/vue";
+import { XMarkIcon } from "@heroicons/vue/24/outline";
+
+const products = [
+  {
+    id: 1,
+    name: "Throwback Hip Bag",
+    href: "#",
+    color: "Salmon",
+    price: "$90.00",
+    quantity: 1,
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
+    imageAlt:
+      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
+  },
+  {
+    id: 2,
+    name: "Medium Stuff Satchel",
+    href: "#",
+    color: "Blue",
+    price: "$32.00",
+    quantity: 1,
+    imageSrc:
+      "https://tailwindcss.com/plus-assets/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
+    imageAlt:
+      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
+  },
+  // More products...
+];
+
+const open = ref(false);
+
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 const product = ref();
 const loading = ref(false);
 const errorMessage = ref("");
 
-// Fungsi untuk mengambil data produk dari Laravel API
+const count = ref(1);
+
+const increase = () => count.value++;
+const decrease = () => {
+  if (count.value > 1) count.value--;
+};
+
+// Fungsi untuk mengambil data produk dari  Back End
 import api from "../api.js";
 
 const getProducts = async () => {
@@ -293,7 +355,6 @@ const getProducts = async () => {
 // Memanggil API saat komponen dimuat
 onMounted(getProducts);
 
-const reviews = { href: "#", average: 4, totalCount: 4 };
 const route = useRoute();
 
 // Pastikan tidak mengakses properti jika product null

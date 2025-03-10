@@ -37,7 +37,9 @@
             />
           </div>
 
-          <button type="submit" class="w-full bg-[#DAA520] text-white py-3 rounded cursor-pointer">Sign In</button>
+          <button type="submit" class="w-full bg-[#DAA520] text-white py-3 rounded cursor-pointer">
+            Sign In
+          </button>
 
           <p v-if="error" class="text-red-500 mt-2">{{ error }}</p>
         </form>
@@ -70,12 +72,21 @@ export default {
   },
   methods: {
     async login() {
+      const formData = new FormData();
+      formData.append("email", this.email);
+      formData.append("password", this.password);
+
       try {
-        const response = await api.post("/login", {
-          email: this.email,
-          password: this.password,
+        const response = await api.post("/login", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: false,
         });
-        localStorage.setItem("token", response.data.token);
+        const token = response?.data?.token;
+        const userData = response?.data?.user;
+        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("userInfo", JSON.stringify(userData));
+
+        this.$root.user = userData;
         this.$router.push("/");
       } catch (err) {
         this.error = "Login gagal, periksa email dan password!";

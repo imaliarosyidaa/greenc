@@ -31,7 +31,7 @@
             <input v-model="email" type="email" class="w-full p-3 border rounded" required />
           </div>
 
-          <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-end ">
+          <div class="mb-4 grid grid-cols-1 md:grid-cols-2 gap-4 items-end">
             <!-- Password -->
             <div>
               <label class="block text-gray-700 font-medium">Password</label>
@@ -101,11 +101,16 @@ export default {
 
         this.errorMessage = "";
 
-        await api.post("/register", {
-          name: this.name,
-          email: this.email,
-          password: this.password,
+        const formData = new FormData();
+        formData.append("name", this.name);
+        formData.append("email", this.email);
+        formData.append("password", this.password);
+
+        await api.post("/register", formData, {
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: false,
         });
+
         this.$router.push("/signin");
       } catch (err) {
         this.error = "Login gagal, periksa email dan password!";

@@ -1,6 +1,5 @@
 <template>
-  <div class="bg-white">
-    <div>
+  <div class="bg-white -z-10 absolute">
       <main class="mx-auto max-w-7xl">
         <div
           class="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6 bg-gradient-to-r from-[#DAA520]/50 to-[#123B32]/50"
@@ -16,7 +15,7 @@
               <div
                 class="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8"
               >
-                <RouterLink v-for="th in Thumbnail" :key="th.id" :to="`/article/${th.id}`">
+                <RouterLink v-for="th in Thumbnail" :key="th.id" :to="`/article/${th.id}`" class="group relative">
                   <img
                     :src="th.imageSrc"
                     :alt="th.imageAlt"
@@ -40,7 +39,6 @@
         </div>
       </main>
     </div>
-  </div>
 </template>
 
 <script setup>

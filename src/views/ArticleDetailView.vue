@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white">
+  <div class="bg-white -z-10 absolute">
     <div>
       <main class="mx-auto max-w-7xl">
         <div
@@ -59,8 +59,7 @@ import { ref, computed } from "vue";
 import { useRoute } from "vue-router";
 import dress from "../assets/ProductsImage/dress-2583113_1280.jpg";
 import fastfashion from "../assets/ProductsImage/fast fashion.jpg";
-import  closeup from "../assets/closeup-bea-ch-shore-washed-up-with-garbage.jpg";
-
+import closeup from "../assets/closeup-bea-ch-shore-washed-up-with-garbage.jpg";
 
 const articles = ref([
   {
@@ -68,8 +67,7 @@ const articles = ref([
     title: "10 Tips Merawat Pakaian Agar Tetap Awet",
     date: "2025-03-01",
     imageSrc: dress,
-    par1:
-      "Merawat pakaian adalah salah satu cara menyayangi pakaian. Pakaian yang dirawat dengan baik akan memperpanjang umur pakaian dan juga mempertahankan penampilanya. Pakaian yang tidak dirawat dengan baik, seiring waktu akan menurun kualitasnya seperti warna yang memudar, kain yang mudah melar bahkan bisa rusak seperti berlubang dan lain sebagainya. Untuk menghindari hal-hal yang tidak diinginkan, pentingnya melakukan perawatan pakaian. Perawatan yang tepat akan menjaga pakaian nampak seperti baru. Banyak cara yang dapat dilakukan agar pakaian dapat awet dan terjaga kualitasnya.",
+    par1: "Merawat pakaian adalah salah satu cara menyayangi pakaian. Pakaian yang dirawat dengan baik akan memperpanjang umur pakaian dan juga mempertahankan penampilanya. Pakaian yang tidak dirawat dengan baik, seiring waktu akan menurun kualitasnya seperti warna yang memudar, kain yang mudah melar bahkan bisa rusak seperti berlubang dan lain sebagainya. Untuk menghindari hal-hal yang tidak diinginkan, pentingnya melakukan perawatan pakaian. Perawatan yang tepat akan menjaga pakaian nampak seperti baru. Banyak cara yang dapat dilakukan agar pakaian dapat awet dan terjaga kualitasnya.",
     subtitle: "Cara Merawat Pakaian Agar Tetap Awet",
     list: [
       "Pisahkan pakaian berdasarkan warna saat mencuci",
@@ -94,7 +92,7 @@ const articles = ref([
     par1: "Fast fashion adalah perilaku dlam industri fasyen yang memproduksi produk dngan cepat dan relatif terjangkau di semua kalangan atau murah. Produk fast fashion umumnya ditandai dengan model model yang diikuti tren terkini dan harganya murah.",
     par2: " Brand brand fasyen yang menerapkan metode ini akan menghadirkan kolekai terbarunya di hadapan konsumen, pergantian mode selalu cepat sehingga produk produknya juga tersedia dalam waktu yang cepat. Produksi ini menjadi tak terkendali kemudian dijual di hadapan konsumen dengan harga murah.",
     par3: "Fenomena tersebut sangat menguntungkan produsen karen pihak konsumen akan terus berganti ganti gaya mengikuti tren fasyen yang ada dalam waktu relatif singkat. Perubahan tren ini membuat penampilan mereka tak membosankan. ",
-    par4: "Saat ini,maraknya fast fashion bikan lagi menjadi hal yang asing, sebab semakin berkembangnya zaman, teknologi yang ada juga semakin cepat. Toko-toko online semakin marak. Masyarakat sebagai konsumen pun dapat mendapatkan pakaian dengan mudah, murah, dan cepat."
+    par4: "Saat ini,maraknya fast fashion bikan lagi menjadi hal yang asing, sebab semakin berkembangnya zaman, teknologi yang ada juga semakin cepat. Toko-toko online semakin marak. Masyarakat sebagai konsumen pun dapat mendapatkan pakaian dengan mudah, murah, dan cepat.",
   },
   {
     id: 3,

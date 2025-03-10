@@ -9,7 +9,7 @@ import "../assets/main.css";
         <div class="rectangle" />
       </div>
       <div class="text-wrapper-3">
-        <div class="text-wrapper-4">Jual Beli Pakaian #Secondhand</div>
+        <div class="text-wrapper-4">Jual Beli Pakaian Preloved</div>
         <p class="bersama-lestarikan">
           Bersama Lestarikan <br />
           Lingkungan Dengan Mengurangi <br />
@@ -32,22 +32,6 @@ import YoutubeSection from "./home/YoutubeVideo.vue";
 import FeatureSection from "./home/Feature.vue";
 import FaqSection from "./home/Faq.vue";
 import FooterSection from "./home/Footer.vue";
-import api from "../api.js";
-
-export default {
-  data() {
-    return { user: null };
-  },
-  async mounted() {
-    try {
-      const response = await api.get("/user");
-      this.user = response.data;
-      console.log(this.user)
-    } catch (err) {
-      console.error("Gagal mengambil data user", err);
-    }
-  },
-};
 </script>
 
 <style>
