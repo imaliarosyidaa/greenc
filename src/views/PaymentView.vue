@@ -80,10 +80,6 @@
           </p>
           <p class="text-gray-600 mt-4">Total Pembayaran</p>
           <p class="text-2xl font-bold">Rp. {{ payment?.total_bill }}</p>
-
-          <button class="mt-6 w-full bg-[#DAA520] text-white py-3 rounded-lg">
-            Upload Bukti Bayar
-          </button>
         </div>
       </div>
     </div>

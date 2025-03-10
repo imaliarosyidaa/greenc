@@ -5,14 +5,22 @@
     <div
       class="pt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8 justify-center items-center"
     >
-      <div class="justify-self-center">
+      <div class="relative justify-self-center">
         <img class="image-1" src="../../assets/fashion-3555646_1280.jpg" />
+        <p class="text-center text-gray-800 mt-2 font-medium">Preloved</p>
       </div>
-      <img class="image-2" src="../../assets/garment-racks-5259773_1280.jpg" />
-      <div class="justify-self-center">
+
+      <div class="relative">
+        <img class="image-2" src="../../assets/garment-racks-5259773_1280.jpg" />
+        <p class="text-center text-gray-800 mt-2 font-medium">Tukar Pakaian</p>
+      </div>
+
+      <div class="relative justify-self-center">
         <img class="image-3" src="../../assets/shirts-428619_1280.jpg" />
+        <p class="text-center text-gray-800 mt-2 font-medium">Sewa Pakaian</p>
       </div>
     </div>
+    
   </div>
 </template>
 

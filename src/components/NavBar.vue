@@ -170,48 +170,50 @@
           Masuk
         </button>
       </RouterLink>
-      <Popover class="relative">
-        <PopoverButton
-          class="inline-flex items-center gap-x-1 text-sm/6 font-semibold cursor-pointer"
-        >
-          <span class="font-medium hidden md:flex" :class="{ 'text-white ': isHome }">{{
-            user?.name
-          }}</span>
-          <ChevronDownIcon
-            class="size-5 hidden md:flex"
-            :class="{
-              'text-white': isHome,
-              hidden: !user?.name,
-              block: user?.name,
-            }"
-            aria-hidden="true"
-          ></ChevronDownIcon>
-        </PopoverButton>
+      <RouterLink v-else>
+        <Popover class="relative">
+          <PopoverButton
+            class="inline-flex items-center gap-x-1 text-sm/6 font-semibold cursor-pointer"
+          >
+            <span class="font-medium hidden md:flex" :class="{ 'text-white ': isHome }">{{
+              user?.name
+            }}</span>
+            <ChevronDownIcon
+              class="size-5 hidden md:flex"
+              :class="{
+                'text-white': isHome,
+                hidden: !user?.name,
+                block: user?.name,
+              }"
+              aria-hidden="true"
+            ></ChevronDownIcon>
+          </PopoverButton>
 
-        <transition
-          enter-active-class="transition ease-out duration-200"
-          enter-from-class="opacity-0 translate-y-1"
-          enter-to-class="opacity-100 translate-y-0"
-          leave-active-class="transition ease-in duration-150"
-          leave-from-class="opacity-100 translate-y-0"
-          leave-to-class="opacity-0 translate-y-1"
-        >
-          <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex max-w-max -translate-x-1/2 px-4">
-            <div
-              class="flex-auto cursor-pointer px-8 py-2 overflow-hidden rounded-3xl bg-white text-sm/6 ring-1 shadow-lg ring-gray-900/5"
-              @click="logout"
-            >
-              <div class="flex justify-center items-center">
-                <ArrowLeftStartOnRectangleIcon
-                  class="size-5 mr-2 text-red-500"
-                  aria-hidden="true"
-                />
-                Logout
+          <transition
+            enter-active-class="transition ease-out duration-200"
+            enter-from-class="opacity-0 translate-y-1"
+            enter-to-class="opacity-100 translate-y-0"
+            leave-active-class="transition ease-in duration-150"
+            leave-from-class="opacity-100 translate-y-0"
+            leave-to-class="opacity-0 translate-y-1"
+          >
+            <PopoverPanel class="absolute left-1/2 z-10 mt-5 flex max-w-max -translate-x-1/2 px-4">
+              <div
+                class="flex-auto cursor-pointer px-8 py-2 overflow-hidden rounded-3xl bg-white text-sm/6 ring-1 shadow-lg ring-gray-900/5"
+                @click="logout"
+              >
+                <div class="flex justify-center items-center">
+                  <ArrowLeftStartOnRectangleIcon
+                    class="size-5 mr-2 text-red-500"
+                    aria-hidden="true"
+                  />
+                  Logout
+                </div>
               </div>
-            </div>
-          </PopoverPanel>
-        </transition>
-      </Popover>
+            </PopoverPanel>
+          </transition>
+        </Popover>
+      </RouterLink>
     </nav>
   </header>
 </template>
