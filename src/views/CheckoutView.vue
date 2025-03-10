@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white -z-10 absolute">
+  <div class="bg-white -z-10">
     <div
       class="mx-auto max-w-2xl px-4 pt-10 pb-16 sm:px-6 lg:max-w-7xl lg:grid-cols-3 lg:px-8 lg:pt-16 lg:pb-24"
     >
